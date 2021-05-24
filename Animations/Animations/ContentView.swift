@@ -12,16 +12,33 @@ struct ContentView: View {
     @State private var isClicked: Bool = false
     
     var body: some View {
-        Button(action: {
-            self.animation()
-        }, label: {
-            Image(systemName: "plus.circle.fill")
-                .resizable()
-                .frame(width: 60, height: 60, alignment: .center)
-                .rotationEffect(isClicked ? .degrees(90) : .degrees(0))
-                .animation(.spring())
-            
-        })
+        GeometryReader {
+            geometry in
+            ZStack(alignment: .top) {
+                Button(action: {
+                    self.animation()
+                }, label: {
+                    Image(systemName: isClicked ? "gobackward" : "plus.circle.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 60, height: 60, alignment: .top)
+                        .rotationEffect(isClicked ? .degrees(90) : .degrees(0))
+                        .animation(.spring())
+                })
+                
+                Color.black
+                    .frame(width: 100, height: 100, alignment: .center)
+//                    .rotation3DEffect(
+//                        isClicked ? .degrees(360) : .degrees(0),
+//                        axis: (x: 1.0, y: 1.0, z: 1.0)
+//                    )
+//                    .animation(.linear(duration: 1))
+                    .offset(x: 0,
+                            y: isClicked ? geometry.size.height / 2 - 100 : geometry.size.height / 2 + 100)
+                    .animation(.spring())
+            }
+            .frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
+        }
     }
     
     func animation() {
