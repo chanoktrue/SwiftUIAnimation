@@ -36,6 +36,15 @@ struct ContentView: View {
                     .offset(x: 0,
                             y: isClicked ? geometry.size.height / 2 - 100 : geometry.size.height / 2 + 100)
                     .animation(.spring())
+                
+                if isClicked {
+                    Color.red
+                        .frame(width: 100, height: 100, alignment: .center)
+                        .transition(.asymmetric(insertion: .scale, removal: .opacity))
+                        .offset(x: 0, y: geometry.size.height * -0.2)
+                }
+
+                    
             }
             .frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
         }
